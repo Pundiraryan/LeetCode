@@ -2,21 +2,17 @@
 class Solution {
 public:
     long long largestPerimeter(vector<int>& nums) {
-        ll ans=-1;
         sort(nums.begin(),nums.end());
-        ll  maxi=nums[2],rs=nums[0]+nums[1];
-        if(rs>maxi)ans=rs+maxi;
-        ll i=0,j=3;
+        ll sum=0;
         ll n=nums.size();
-        while(j<n){
-            maxi=nums[j];
-            rs+=nums[j-1];
-            if(rs>maxi){
-                cout<<rs<<" "<<maxi<<endl;
-                if(j-i>=2)ans=max(ans,rs+maxi);
-            }
-            j++;
+        vector<ll>ps(n);
+        for(ll i=0;i<n;i++){
+            sum+=nums[i];
+            ps[i]=(sum);
         }
-        return ans;
+        for(ll i=n-1;i>=2;i--){
+            if(ps[i-1]>nums[i])return ps[i-1]+nums[i];
+        }
+        return -1;
     }
 };
