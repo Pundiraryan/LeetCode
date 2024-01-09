@@ -5,15 +5,15 @@ public:
         ll n=maxHeights.size();
         ll ans=0;
         stack<ll>st;
-        vector<ll>dpl(n,0),dpr(n,0);
+        vector<vector<ll>>dp(n,vector<ll>(2,0));
         for(int i=0;i<n;i++){
             while(!st.empty() && maxHeights[i]<=maxHeights[st.top()]){
                 st.pop();
             }
             if(!st.empty()){
-                dpl[i]=max(dpl[i],(ll)(i-st.top())*(ll)maxHeights[i]+dpl[st.top()]);
+                dp[i][0]=max(dp[i][0],(ll)(i-st.top())*(ll)maxHeights[i]+dp[st.top()][0]);
             }else{
-                dpl[i]=(ll)(i+1)*(ll)maxHeights[i];
+                dp[i][0]=(ll)(i+1)*(ll)maxHeights[i];
             }
             st.push(i);
         }
@@ -23,15 +23,15 @@ public:
                 st.pop();
             }
             if(!st.empty()){
-                dpr[i]=max(dpr[i],(ll)(st.top()-i)*(ll)maxHeights[i] +dpr[st.top()]);
+                dp[i][1]=max(dp[i][1],(ll)(st.top()-i)*(ll)maxHeights[i] +dp[st.top()][1]);
             }else{
-                dpr[i]=(ll)(n-i)*(ll)maxHeights[i];
+                dp[i][1]=(ll)(n-i)*(ll)maxHeights[i];
             }
             st.push(i);
         }
-        ans=max(ans,max(dpl[n-1],dpr[0]));
+        ans=max(ans,max(dp[n-1][0],dp[0][1]));
         for(ll i=0;i<n-1;i++){
-            ans=max(ans,dpl[i]+dpr[i+1]);
+            ans=max(ans,dp[i][0]+dp[i+1][1]);
         }
         return ans;
     }
