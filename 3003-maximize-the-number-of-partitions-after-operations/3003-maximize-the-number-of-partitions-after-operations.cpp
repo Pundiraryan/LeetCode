@@ -1,9 +1,9 @@
 class Solution {
 public:
     unordered_map<long long,int>dp;
-    int f(long long i,long long uq,int c,int k,string &s){
+    int f(int i,int uq,int c,int k,string &s){
         if(i>=s.length())return 0;
-         long long key=(i<<27)|(uq<<1)|c;
+         long long key=((long long)i<<27)|(uq<<1)|c;
         if(dp.find(key)!=dp.end())return dp[key];
         int cidx=s[i]-'a';
         int nuq=uq|(1<<cidx);
