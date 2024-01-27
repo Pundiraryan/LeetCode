@@ -2,15 +2,20 @@
 class Solution {
 public:
     int kInversePairs(int n, int k) {
-        vector<vector<int>>dp(n+1,vector<int>(k+1,0));
-        for(int i=0;i<=n;i++)dp[i][0]=1;
+        vector<int>curr(k+1,0);
+        vector<int>prev(k+1,0);
+        prev[0]=1;
         for(int i=1;i<=n;i++){
-            for(int j=1;j<=k;j++){
-                dp[i][j]=(dp[i][j]+dp[i-1][j])%mod;
-                dp[i][j]=(dp[i][j]+dp[i][j-1])%mod;
-                if(j>=i)dp[i][j]=(dp[i][j]-dp[i-1][j-i]+mod)%mod;
+            for(int j=0;j<=k;j++){
+                if(j==0){
+                    curr[j]=prev[j];
+                    continue;
+                }
+                curr[j]=(prev[j]+curr[j-1])%mod;
+                if(j>=i)curr[j]=(curr[j]-prev[j-i]+mod)%mod;
             }
+            prev=curr;
         }
-        return dp[n][k];
+        return curr[k];
     }
 };
