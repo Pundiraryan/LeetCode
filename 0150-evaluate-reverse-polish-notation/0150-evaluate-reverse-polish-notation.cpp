@@ -3,6 +3,19 @@ public:
     int evalRPN(vector<string>& tokens) {
         unordered_set<string>sp;
         sp.insert("+");sp.insert("-");sp.insert("/");sp.insert("*");
+        unordered_map<string,function<int(int,int)>>mp={
+        {"+",[](int a,int b){
+            return a+b;
+        }},{"-",[](int a,int b){
+            return a-b;
+        }},
+        {"*",[](int a,int b){
+            return a*b;
+        }},
+        {"/",[](int a,int b){
+            return a/b;
+        }},
+};
         stack<int>st;
         for(auto &x:tokens){
             if(sp.find(x)==sp.end()){
@@ -13,14 +26,7 @@ public:
             st.pop();
             int a = st.top();
             st.pop();
-            if (x == "+")
-                st.push(a + b);
-            else if (x == "-")
-                st.push(a - b);
-            else if (x == "*")
-                st.push(a * b);
-            else
-                st.push(a / b);
+            st.push(mp[x](a,b));
             }
         }
         return st.top();
