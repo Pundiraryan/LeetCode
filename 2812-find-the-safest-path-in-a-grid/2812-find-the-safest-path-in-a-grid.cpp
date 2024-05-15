@@ -38,7 +38,7 @@ public:
         vector<vector<int>>md=nd(grid);
         int ans=0;
         int l=0,r=1e9;
-        auto check=[&](int mid,vector<vector<int>>&md){
+        auto check=[&](int mid){
              queue<pair<int,int>>bfs;
             int r=md.size(),c=md.size();
             if(md[0][0]<mid)return false;
@@ -66,7 +66,7 @@ public:
         };
         while(l<=r){
             int mid=(l+r)/2;
-            if(check(mid,md)){
+            if(check(mid)){
                 ans=mid;
                 l=mid+1;
             }else{
